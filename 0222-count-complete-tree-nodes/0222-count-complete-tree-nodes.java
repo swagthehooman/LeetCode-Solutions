@@ -17,15 +17,18 @@ class Solution {
     public int countNodes(TreeNode root) {
         if(root==null)
             return 0;
-        List<Integer> list=new ArrayList<>();
-        preOrder(root,list);
-        return list.size();
-    }
-    private void preOrder(TreeNode root, List<Integer> list){
-        if(root==null)
-            return;
-        list.add(root.val);
-        preOrder(root.left,list);
-        preOrder(root.right,list);
+        TreeNode left=root.left, right=root.right;
+        int l=1,r=1;
+        while(left!=null){
+            left=left.left;
+            l++;
+        }
+        while(right!=null){
+            right=right.right;
+            r++;
+        }
+        if(l==r)
+            return (1<<l)-1;
+        return 1+countNodes(root.left)+countNodes(root.right);
     }
 }
